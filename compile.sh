@@ -24,7 +24,7 @@ fi
 
 # Compile and run a single project
 if [ -n "$1" ]; then
-  gcc -o $build_dir/$1 $1/main.c
+  gcc -o $build_dir/$1 $1/main.c || exit $?
   ./$build_dir/$1
   exit $?
 fi
