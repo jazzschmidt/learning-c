@@ -2,10 +2,30 @@
 
 build_dir="build"
 
-# Clean task - when the argument `clean` was given
+# Clean task - cleans the build dir when the argument `clean` was given
 if [ "$1" = "clean" ]; then
   rm -rf $build_dir
   exit $?
+fi
+
+# Create task - creates a template directory for a new program
+if [ "$1" = "create" ]; then
+  if [ -z "$2" ]; then
+    echo "No program name specified!" >&2
+    exit 1
+  fi
+
+  mkdir $2
+  cat << EOF > ./$2/main.c
+#include <stdio.h>
+
+int main(int argc, char const *argv[]) {
+  // Implement $2
+  return 0;
+}
+
+EOF
+  exit
 fi
 
 ## BUILD ##
