@@ -1,6 +1,28 @@
 #!/usr/bin/env bash
 
+script_name=$0
 build_dir="build"
+
+function print_help()
+{
+  cat << EOF
+Usage: $script_name [task/project]
+
+Builds the C programs in the current directory or executes an arbitrary build
+[task], such as cleaning the output directory.
+
+When called with an argument that is not part of the TASKS list, the script
+tries to build the program with the arguments name, e.g.
+\`$script_name hello-world\` will compile the program in the directory
+hello-world.
+
+TASKS
+    help    Displays this usage info.
+    clean   Cleans the output directory ($build_dir).
+    create  Creates a new program directory with an empty source code file.
+
+EOF
+}
 
 function error()
 {
@@ -72,6 +94,9 @@ EOF
 
 
 case $1 in
+  *help)
+    print_help
+    ;;
   clean)
     clean_build_dir
     ;;
