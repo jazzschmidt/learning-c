@@ -23,22 +23,12 @@ function clean_build_dir()
 
 function run()
 {
-  if [ -z "$1" ]; then
-    error "No program name specified!"
-  fi
-
   ./$build_dir/$1
 }
 
 function compile()
 {
-  if [ -z "$1" ]; then
-    error "No program name specified!"
-  fi
-
-  name=$1
-
-  gcc -o $build_dir/$name $name/main.c
+  gcc -o $build_dir/$1 $1/main.c
 }
 
 function compile_all()
@@ -68,14 +58,12 @@ function create_template_program()
     error "No program name specified!"
   fi
 
-  name=$1
-
-  mkdir $2
-  cat << EOF > ./$2/main.c
+  mkdir $1
+  cat << EOF > ./$1/main.c
 #include <stdio.h>
 
 int main(int argc, char const *argv[]) {
-  // Implement $2
+  // TODO: Implement $1
   return 0;
 }
 
@@ -89,7 +77,7 @@ case $1 in
     exit
     ;;
   create)
-    create_template_program
+    create_template_program $2
     exit
     ;;
   *)
