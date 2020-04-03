@@ -2,18 +2,64 @@
 
 build_dir="build"
 
-# Clean task - cleans the build dir when the argument `clean` was given
-if [ "$1" = "clean" ]; then
-  rm -rf $build_dir
-  exit $?
-fi
+function error()
+{
+  echo "ERROR: $1" >&2
+  exit 1
+}
 
-# Create task - creates a template directory for a new program
-if [ "$1" = "create" ]; then
-  if [ -z "$2" ]; then
-    echo "No program name specified!" >&2
-    exit 1
+function test_compiler()
+{
+  which gcc >/dev/null
+  if [ $? -eq 1 ]; then
+   error "Could not find gcc in path!"
   fi
+}
+
+function clean_build_dir()
+{
+  rm -rf $build_dir
+}
+
+function compile()
+{
+  if [ -z "$1" ]; then
+    error "No program name specified!"
+  fi
+
+  name=$1
+
+  gcc -o $build_dir/$name $name/main.c
+}
+
+function compile_all()
+{
+  for dir in *; do
+    if [ -f "$dir/main.c" ]; then
+      checkmark="\xE2\x9C\x85"
+      crossmark="\xE2\x9D\x8C"
+
+      echo -en "$dir..."
+      compile $dir
+
+      if [ $? -eq 0 ]; then
+        mark=$checkmark
+      else
+        mark=$crossmark
+      fi
+
+      echo -e "\r$dir $mark"
+    fi
+  done
+}
+
+function create_template_program()
+{
+  if [ -z "$1" ]; then
+    error "No program name specified!"
+  fi
+
+  name=$1
 
   mkdir $2
   cat << EOF > ./$2/main.c
@@ -25,37 +71,23 @@ int main(int argc, char const *argv[]) {
 }
 
 EOF
-  exit
-fi
+}
 
-## BUILD ##
 
-# Require gcc
-which gcc >/dev/null
-if [ $? -eq 1 ]; then
- echo "Could not find gcc on PATH!" >&2
- exit 1
-fi
-
-# Create the build dir
-if [ ! -d $build_dir ]; then
-  mkdir $build_dir
-fi
-
-# Compile and run a single project
-if [ -n "$1" ]; then
-  gcc -o $build_dir/$1 $1/main.c || exit $?
-  ./$build_dir/$1
-  exit $?
-fi
-
-# Compile every main.c from every directory
-for dir in *; do
-  in_file="$dir/main.c"
-
-  if [ -f $in_file ]; then
-    echo -n "Compiling $dir... "
-    gcc -o $build_dir/$dir $in_file
-    echo "done"
-  fi
-done
+case $1 in
+  clean)
+    clean_build_dir
+    exit
+    ;;
+  create)
+    create_template_program
+    exit
+    ;;
+  *)
+    mkdir -p $build_dir
+    if [ -z "$1" ]; then
+      compile_all
+    else
+      compile $1
+    fi
+esac
