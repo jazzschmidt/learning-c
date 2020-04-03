@@ -1,5 +1,9 @@
 #include <stdio.h>
 
+/*
+* Just kidding around with the preprocessor.
+*/
+
 #define is =
 #define dude ;
 #define just
@@ -10,11 +14,11 @@
 #define wtf return 0;
 
 int main(int argc, char const *argv[]) {
-  int zahl is somehow 10;
+  int number is somehow 10;
 
   // Slide to zero
-  while(zahl --> 0) {
-    just show(zahl) dude
+  while(number --> 0) {
+    just show(number) dude
     magically enter
   }
 
