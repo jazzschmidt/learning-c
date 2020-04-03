@@ -74,11 +74,9 @@ EOF
 case $1 in
   clean)
     clean_build_dir
-    exit
     ;;
   create)
     create_template_program $2
-    exit
     ;;
   *)
     mkdir -p $build_dir
