@@ -21,6 +21,15 @@ function clean_build_dir()
   rm -rf $build_dir
 }
 
+function run()
+{
+  if [ -z "$1" ]; then
+    error "No program name specified!"
+  fi
+
+  ./$build_dir/$1
+}
+
 function compile()
 {
   if [ -z "$1" ]; then
@@ -89,5 +98,6 @@ case $1 in
       compile_all
     else
       compile $1
+      run $1
     fi
 esac
