@@ -26,11 +26,7 @@ int test_replace() {
   strreplace(actual, 'U', 'E');
   strreplace(actual, 'W', 'T');
 
-  if(strcmp(actual, expected) != 0) {
-    return 1;
-  } else {
-    return 0;
-  }
+  return strcmp(actual, expected);
 }
 
 int main(int argc, char const *argv[]) {
