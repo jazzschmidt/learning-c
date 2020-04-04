@@ -1,3 +1,5 @@
 
 /* Swaps two strings */
-void strswp(char *str1, char *str2);
+void strswap(char *str1, char *str2);
+
+void strreplace(char *string, char find, char replace);
