@@ -2,10 +2,12 @@
 #include <string.h>
 #include "pointer.h"
 
+#define MAX_STRING 80
+
 int main(int argc, char const *argv[]) {
-  char str1[80], str2[80];
-  strcpy(str1, "Hello\0");
-  strcpy(str2, "world\0");
+  char str1[MAX_STRING], str2[MAX_STRING];
+  strcpy(str1, "Hello");
+  strcpy(str2, "world");
 
   strswp(str1, str2);
 
@@ -24,8 +26,7 @@ int main(int argc, char const *argv[]) {
 
 
 void strswp(char *str1, char *str2) {
-  int str1_len = strlen(str1);
-  char str_tmp[str1_len];
+  char str_tmp[MAX_STRING];
 
   strcpy(str_tmp, str1);
   strcpy(str1, str2);
