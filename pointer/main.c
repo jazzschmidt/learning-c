@@ -59,5 +59,11 @@ void strswap(char *str1, char *str2) {
 }
 
 void strreplace(char *string, char find, char replace) {
+  while(*string) {
+    if(*string == find) {
+      *string = replace;
+    }
 
+    ++string;
+  }
 }
