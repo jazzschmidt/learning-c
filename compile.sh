@@ -45,7 +45,7 @@ function clean_build_dir()
 
 function run()
 {
-  ./$build_dir/$1
+  ./$build_dir/$*
 }
 
 function compile()
@@ -109,6 +109,6 @@ case $1 in
       compile_all
     else
       compile $1
-      run $1
+      run $*
     fi
 esac
