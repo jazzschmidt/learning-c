@@ -7,7 +7,7 @@ const char *prog_name;
 int main(int argc, char const *argv[]) {
   prog_name = argv[0];
 
-  if(argc != 2) {
+  if(argc != 3) {
     fprintf(stderr, "Not sufficient arguments!\n");
     print_usage();
     exit(1);
@@ -17,18 +17,37 @@ int main(int argc, char const *argv[]) {
   char *filename2 = (char *)argv[2];
 
   FILE *file1 = fopen(filename1, "r");
-  FILE *file2 = fopen(filename1, "r");
+  FILE *file2 = fopen(filename2, "r");
 
   if(file1 == NULL) {
-    fprintf(stderr, "File %s could not be opened", file1);
+    fprintf(stderr, "File %s could not be opened", filename1);
   }
   if(file2 == NULL) {
-    fprintf(stderr, "File %s could not be opened", file2);
+    fprintf(stderr, "File %s could not be opened", filename2);
   }
 
+  int line = 0;
+  int different = 0;
   while(!feof(file1) && !feof(file2)) {
-    
+    char c1 = fgetc(file1);
+    char c2 = fgetc(file2);
+
+    if(c1 != c2) {
+      different = 1;
+      break;
+    }
+
+    if(c1 == '\n') {
+      ++line;
+    }
   }
+
+  if(different) {
+    printf("First difference found on line %d:\n", line);
+    printf("File: %s\n", filename1);
+    printf("File: %s\n", filename2);
+  }
+
 
   fclose(file1);
   fclose(file2);
