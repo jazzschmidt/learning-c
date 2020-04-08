@@ -44,14 +44,19 @@ int main(int argc, char const *argv[]) {
 
   if(different) {
     printf("First difference found on line %d:\n", line);
+  } else {
+    printf("No difference found");
   }
 
 
   fclose(file1);
   fclose(file2);
+
+  return different;
 }
 
 void print_usage() {
   printf("Compares two files for equal content. Exits on the first different line.\n");
+  printf("Returns 0 if files are equal, 1 otherwise.");
   printf("USAGE: %s [file1] [file2]\n", prog_name);
 }
