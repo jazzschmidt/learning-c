@@ -44,8 +44,6 @@ int main(int argc, char const *argv[]) {
 
   if(different) {
     printf("First difference found on line %d:\n", line);
-    printf("File: %s\n", filename1);
-    printf("File: %s\n", filename2);
   }
 
 
