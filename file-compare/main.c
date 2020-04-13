@@ -5,6 +5,8 @@
 const char *prog_name;
 
 int main(int argc, char const *argv[]) {
+  atexit(exit_handler);
+
   prog_name = argv[0];
 
   if(argc != 3) {
@@ -59,4 +61,8 @@ void print_usage() {
   printf("Compares two files for equal content. Exits on the first different line.\n");
   printf("Returns 0 if files are equal, 1 otherwise.");
   printf("USAGE: %s [file1] [file2]\n", prog_name);
+}
+
+void exit_handler() {
+  fcloseall();
 }
