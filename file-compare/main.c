@@ -62,7 +62,3 @@ void print_usage() {
   printf("Returns 0 if files are equal, 1 otherwise.");
   printf("USAGE: %s [file1] [file2]\n", prog_name);
 }
-
-void exit_handler() {
-  fcloseall();
-}
