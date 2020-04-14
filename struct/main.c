@@ -27,6 +27,7 @@ void switchPointXY(struct Point* point) {
 
 void validatePointXY(struct Point* point, int x, int y) {
   if(point->x != x || point->y != y) {
+    fprintf(stderr, "%s\n", "ERROR: Struct values were not switched!");
     exit(1);
   }
 }
