@@ -54,6 +54,14 @@ int main(int argc, char const *argv[]) {
     assert("Deleted item is not 456", deleted, deleted != 456);
   }
 
+  { // Removed element is overwritten when pushing a new one
+    int index = il_push(&list, 789);
+    int item = il_get(&list, index);
+
+    assert("Index is 1", index, index == 1);
+    assert("Element is 789", item, item == 789);
+  }
+
   return 0;
 }
 
