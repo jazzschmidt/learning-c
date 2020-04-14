@@ -20,17 +20,20 @@ int main(int argc, char const *argv[]) {
   il_push(&list, 123);
   assert("Size is 1", list.size, list.size == 1);
 
-  int first = il_get(&list, 0);
-  assert("First element is 123", first, first == 123);
+  int item1 = il_get(&list, 0);
+  assert("First element is 123", item1, item1 == 123);
 
   il_push(&list, 456);
   assert("Size is 2", list.size, list.size == 2);
 
-  int last = il_get(&list, 1);
-  assert("Last element is 456", last, last == 456);
+  int item2 = il_get(&list, 1);
+  assert("Second element is 456", item2, item2 == 456);
 
   il_pop(&list);
   assert("Size is 1", list.size, list.size == 1);
+
+  int last = il_get(&list, list.size-1);
+  assert("Last element is the first one", last, last == item1);
 
   return 0;
 }
