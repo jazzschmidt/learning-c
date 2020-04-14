@@ -3,18 +3,25 @@
 #include "list.h"
 
 void assert(char* msg, char expression) {
+  static int assert_nr = 0;
+  ++assert_nr;
+
   if(!expression) {
-    fprintf(stderr, "[ERROR] Assertion failed: %s\n", msg);
+    fprintf(stderr, "[ERROR] Assertion %d failed: %s\n", assert_nr, msg);
   }
 }
 
 int main(int argc, char const *argv[]) {
   intlist list = il_create();
-
   assert("Size is 0", list.size == 0);
 
   il_push(&list, 123);
+  assert("Size is 1", list.size == 1);
 
+  il_push(&list, 456);
+  assert("Size is 2", list.size == 2);
+
+  il_pop(&list);
   assert("Size is 1", list.size == 1);
 
   return 0;
