@@ -14,28 +14,47 @@ void assert(char* msg, long actual, char expression) {
 }
 
 int main(int argc, char const *argv[]) {
+  // Create an empty list
   intlist list = il_create();
-  assert("Size is 0", list.size, list.size == 0);
 
-  int index1 = il_push(&list, 123);
-  assert("Size is 1", list.size, list.size == 1);
-  assert("First index is 0", index1, index1 == 0);
+  { // List is initially empty
+    assert("Size is 0", list.size, list.size == 0);
+  }
 
-  int item1 = il_get(&list, 0);
-  assert("First element is 123", item1, item1 == 123);
+  { // The item is added to the list
+    int index = il_push(&list, 123);
+    int item = il_get(&list, 0);
 
-  int index2 = il_push(&list, 456);
-  assert("Size is 2", list.size, list.size == 2);
-  assert("Second index is 1", index2, index2 == 1);
+    assert("Size is 1", list.size, list.size == 1);
+    assert("First index is 0", index, index == 0);
+    assert("First element is 123", item, item == 123);
+  }
 
-  int item2 = il_get(&list, 1);
-  assert("Second element is 456", item2, item2 == 456);
+  { // Another item is added to the list
+    int index = il_push(&list, 456);
+    int item2 = il_get(&list, 1);
 
-  il_pop(&list);
-  assert("Size is 1", list.size, list.size == 1);
+    assert("Size is 2", list.size, list.size == 2);
+    assert("Second index is 1", index, index == 1);
+    assert("Second element is 456", item2, item2 == 456);
+  }
 
-  int last = il_get(&list, list.size-1);
-  assert("Last element is the first one", last, last == item1);
+  { // Last element is removed and thus last = first
+    il_pop(&list);
+
+    assert("Size is 1", list.size, list.size == 1);
+
+    int first = il_get(&list, 0);
+    int last = il_get(&list, list.size-1);
+
+    assert("Last element is the first one", last, last == first);
+  }
+
+
+
+
+
+
 
   return 0;
 }
