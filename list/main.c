@@ -38,10 +38,18 @@ int main(int argc, char const *argv[]) {
   return 0;
 }
 
+/**
+ * Creates an empty list
+ */
 intlist il_create() {
   return (intlist){.size=0};
 }
 
+/**
+ * Appends a value to a list and returns its index
+ *
+ * @return index of the item
+ */
 long il_push(intlist* list, int value) {
   list->elements = realloc(list->elements, ++list->size * sizeof(int));
   int *ptr = list->elements + (list->size-1);
@@ -50,6 +58,11 @@ long il_push(intlist* list, int value) {
   return list->size;
 }
 
+/**
+ * Retrieves a value by its index
+ *
+ * @return item of the list
+ */
 int il_get(intlist* list, long index) {
   int *ptr = list->elements;
   ptr += index;
@@ -57,6 +70,9 @@ int il_get(intlist* list, long index) {
   return *ptr;
 }
 
+/**
+ * Removes the last element
+ */
 void il_pop(intlist* list) {
   list->elements = realloc(list->elements, --list->size * sizeof(int));
 }
