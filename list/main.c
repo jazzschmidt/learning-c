@@ -17,14 +17,16 @@ int main(int argc, char const *argv[]) {
   intlist list = il_create();
   assert("Size is 0", list.size, list.size == 0);
 
-  il_push(&list, 123);
+  int index1 = il_push(&list, 123);
   assert("Size is 1", list.size, list.size == 1);
+  assert("First index is 0", index1, index1 == 0);
 
   int item1 = il_get(&list, 0);
   assert("First element is 123", item1, item1 == 123);
 
-  il_push(&list, 456);
+  int index2 = il_push(&list, 456);
   assert("Size is 2", list.size, list.size == 2);
+  assert("Second index is 1", index2, index2 == 1);
 
   int item2 = il_get(&list, 1);
   assert("Second element is 456", item2, item2 == 456);
@@ -51,11 +53,12 @@ intlist il_create() {
  * @return index of the item
  */
 long il_push(intlist* list, int value) {
+  int index = list->size;
   list->elements = realloc(list->elements, ++list->size * sizeof(int));
-  int *ptr = list->elements + (list->size-1);
+  int *ptr = list->elements + (index);
   *ptr = value;
 
-  return list->size;
+  return index;
 }
 
 /**
