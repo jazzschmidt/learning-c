@@ -6,8 +6,8 @@ typedef struct {
 
 intlist il_create();
 
-long il_add(intlist*, int);
+long il_push(intlist*, int);
 
 int il_get(intlist*, long);
 
-void il_remove(intlist*, long);
+void il_pop(intlist*);
