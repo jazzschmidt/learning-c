@@ -41,5 +41,5 @@ int il_get(intlist* list, long index) {
 }
 
 void il_pop(intlist* list) {
-  
+  list->elements = realloc(list->elements, --list->size * sizeof(int));
 }
