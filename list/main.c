@@ -32,7 +32,7 @@ intlist il_create() {
 }
 
 long il_push(intlist* list, int value) {
-  list->elements = malloc(++list->size * sizeof(int));
+  list->elements = realloc(list->elements, ++list->size * sizeof(int));
   return list->size;
 }
 
@@ -41,5 +41,5 @@ int il_get(intlist* list, long index) {
 }
 
 void il_pop(intlist* list) {
-
+  
 }
