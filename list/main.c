@@ -47,14 +47,12 @@ int main(int argc, char const *argv[]) {
     int first = il_get(&list, 0);
     int last = il_get(&list, list.size-1);
 
+    assert("First item is 123", first, first == 123);
     assert("Last element is the first one", last, last == first);
+
+    int deleted = il_get(&list, 1);
+    assert("Deleted item is not 456", deleted, deleted != 456);
   }
-
-
-
-
-
-
 
   return 0;
 }
@@ -96,5 +94,7 @@ int il_get(intlist* list, long index) {
  * Removes the last element
  */
 void il_pop(intlist* list) {
-  list->elements = realloc(list->elements, --list->size * sizeof(int));
+  --list->size;
+  *(list->elements + list->size) = 0;
+  list->elements = realloc(list->elements, list->size * sizeof(int));
 }
