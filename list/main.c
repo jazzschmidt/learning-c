@@ -13,53 +13,61 @@ void assert(char* msg, long actual, char expression) {
   }
 }
 
+void assertEquals(char *msg, long actual, long expected) {
+  assert(msg, actual, actual == expected);
+}
+
+void assertNotEquals(char *msg, long actual, long expected) {
+  assert(msg, actual, actual != expected);
+}
+
 int main(int argc, char const *argv[]) {
   // Create an empty list
   intlist list = il_create();
 
   { // List is initially empty
-    assert("Size is 0", list.size, list.size == 0);
+    assertEquals("Size is 0", list.size, 0);
   }
 
   { // The item is added to the list
     int index = il_push(&list, 123);
     int item = il_get(&list, 0);
 
-    assert("Size is 1", list.size, list.size == 1);
-    assert("First index is 0", index, index == 0);
-    assert("First element is 123", item, item == 123);
+    assertEquals("Size is 1", list.size,  1);
+    assertEquals("First index is 0", index, 0);
+    assertEquals("First element is 123", item, 123);
   }
 
   { // Another item is added to the list
     int index = il_push(&list, 456);
     int item2 = il_get(&list, 1);
 
-    assert("Size is 2", list.size, list.size == 2);
-    assert("Second index is 1", index, index == 1);
-    assert("Second element is 456", item2, item2 == 456);
+    assertEquals("Size is 2", list.size, 2);
+    assertEquals("Second index is 1", index, 1);
+    assertEquals("Second element is 456", item2, 456);
   }
 
   { // Last element is removed and thus last = first
     il_pop(&list);
 
-    assert("Size is 1", list.size, list.size == 1);
+    assertEquals("Size is 1", list.size, 1);
 
     int first = il_get(&list, 0);
     int last = il_get(&list, list.size-1);
 
-    assert("First item is 123", first, first == 123);
-    assert("Last element is the first one", last, last == first);
+    assertEquals("First item is 123", first, 123);
+    assertEquals("Last element is the first one", last, first);
 
     int deleted = il_get(&list, 1);
-    assert("Deleted item is not 456", deleted, deleted != 456);
+    assertNotEquals("Deleted item is not 456", deleted, deleted != 456);
   }
 
   { // Removed element is overwritten when pushing a new one
     int index = il_push(&list, 789);
     int item = il_get(&list, index);
 
-    assert("Index is 1", index, index == 1);
-    assert("Element is 789", item, item == 789);
+    assertEquals("Index is 1", index, 1);
+    assertEquals("Element is 789", item, 789);
   }
 
   return 0;
