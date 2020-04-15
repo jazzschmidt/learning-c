@@ -79,9 +79,9 @@ intlist il_create() {
  */
 long il_push(intlist* list, int value) {
   int index = list->size;
+
   list->elements = realloc(list->elements, ++list->size * sizeof(int));
-  int *ptr = list->elements + (index);
-  *ptr = value;
+  *(list->elements + index) = value;
 
   return index;
 }
@@ -92,17 +92,14 @@ long il_push(intlist* list, int value) {
  * @return item of the list
  */
 int il_get(intlist* list, long index) {
-  int *ptr = list->elements;
-  ptr += index;
-
-  return *ptr;
+  return *(list->elements + index);
 }
 
 /**
  * Removes the last element
  */
 void il_pop(intlist* list) {
-  --list->size;
+  list->size -= 1;
   *(list->elements + list->size) = 0;
   list->elements = realloc(list->elements, list->size * sizeof(int));
 }
