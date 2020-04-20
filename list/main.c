@@ -60,6 +60,7 @@ int main(int argc, char const *argv[]) {
 
     int deleted = il_get(&list, 1);
     assertNotEquals("Deleted item is not 456", deleted, deleted != 456);
+    assertNotEquals("Deleted item is overwritten with 0", deleted, deleted != 0);
   }
 
   { // Removed element is overwritten when pushing a new one
