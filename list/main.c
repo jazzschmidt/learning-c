@@ -59,8 +59,7 @@ int main(int argc, char const *argv[]) {
     assertEquals("Last element is the first one", last, first);
 
     int deleted = il_get(&list, 1);
-    assertNotEquals("Deleted item is not 456", deleted, deleted != 456);
-    assertNotEquals("Deleted item is overwritten with 0", deleted, deleted != 0);
+    assertNotEquals("Deleted item is not 456", deleted, 456);
   }
 
   { // Removed element is overwritten when pushing a new one
@@ -88,8 +87,12 @@ intlist il_create() {
  */
 long il_push(intlist* list, int value) {
   int index = list->size;
+  int* elementsPtr = realloc(list->elements, ++list->size * sizeof(int));
 
-  list->elements = realloc(list->elements, ++list->size * sizeof(int));
+  if(elementsPtr != NULL) {
+    list->elements = elementsPtr;
+  }
+
   *(list->elements + index) = value;
 
   return index;
@@ -108,7 +111,12 @@ int il_get(intlist* list, long index) {
  * Removes the last element
  */
 void il_pop(intlist* list) {
+  *(list->elements + list->size - 1) = 0;
+  int* elementsPtr = realloc(list->elements, list->size * sizeof(int));
+
+  if(elementsPtr != NULL) {
+    list->elements = elementsPtr;
+  }
+
   list->size -= 1;
-  *(list->elements + list->size) = 0;
-  list->elements = realloc(list->elements, list->size * sizeof(int));
 }
